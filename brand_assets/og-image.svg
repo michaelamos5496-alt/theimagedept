@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#161320"/>
+      <stop offset="55%" stop-color="#0a0810"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#bg)"/>
+  <text x="600" y="565" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="98" letter-spacing="-3" fill="#ffffff">theimagedept<tspan fill="#6d5bf5">.</tspan></text>
+  <text x="600" y="628" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="400" font-size="28" letter-spacing="0.5" fill="#9a96a8">Websites, systems &amp; automation that convert.</text>
+</svg>

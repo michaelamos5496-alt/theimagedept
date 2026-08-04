@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TheImageDept — Websites, systems & automation that convert</title>
+<!-- Placeholder domain — replace theimagedept.com below with your real domain once registered -->
+<link rel="canonical" href="https://theimagedept.com/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="TheImageDept" />
+<meta property="og:url" content="https://theimagedept.com/" />
+<meta property="og:title" content="TheImageDept — Websites, systems & automation that convert" />
+<meta property="og:description" content="Custom-built websites, management systems, and automations for businesses. Fast, and made to convert." />
+<meta property="og:image" content="https://theimagedept.com/brand_assets/og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="TheImageDept — Websites, systems & automation that convert" />
+<meta name="twitter:description" content="Custom-built websites, management systems, and automations for businesses. Fast, and made to convert." />
+<meta name="twitter:image" content="https://theimagedept.com/brand_assets/og-image.jpg" />
+<meta name="description" content="Custom-built websites, management systems, and automations for businesses. Fast, and made to convert." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ctext x='30' y='42' font-family='Arial,sans-serif' font-size='27' font-weight='800' fill='%23fff' text-anchor='middle'%3EID.%3C/text%3E%3C/svg%3E" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "TheImageDept",
+  "url": "https://theimagedept.com/",
+  "image": "https://theimagedept.com/brand_assets/og-image.jpg",
+  "description": "Custom-built websites, management systems, and automations for businesses.",
+  "email": "michael.amos5496@gmail.com",
+  "telephone": "+233541479680",
+  "sameAs": ["https://www.instagram.com/theimagedept_/"]
+}
+</script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          blue: '#6d5bf5',
+          bluedim: 'rgba(109,91,245,0.15)',
+          ink: '#131518',
+          g800: '#222529',
+          g500: '#6c7584',
+          g300: '#a1a7b2',
+          sand: '#f8f7f7',
+        },
+        fontFamily: {
+          sans: ['Sora', 'Arial', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+
+<!-- GSAP + Lenis + Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+
+<style>
+  html { scroll-behavior: auto; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body { background: #000; color: #fff; font-family: 'Sora', Arial, sans-serif; -webkit-font-smoothing: antialiased; overscroll-behavior: none; }
+  ::selection { background: #6d5bf5; color: #fff; }
+
+  .grain::before {
+    content: "";
+    position: fixed; inset: 0; z-index: 40; pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  #film-logo { opacity: 0; transition: opacity 1.2s ease; }
+  #film-logo.show { opacity: 1; }
+
+  /* Link underline sweeps in from the left on hover, exits to the right */
+  .uline { position: relative; }
+  .uline::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1px;
+    background: currentColor;
+    transform: scaleX(0); transform-origin: 100% 50%;
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.4, 1);
+  }
+  .uline:hover::after, .uline:focus-visible::after { transform: scaleX(1); transform-origin: 0% 50%; }
+
+  #preloader { position: fixed; inset: 0; z-index: 100; background: #000; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; }
+  #preloader .preloader-mark { font-size: clamp(1.4rem, 3vw, 2.25rem); font-weight: 500; letter-spacing: -0.03em; }
+  #preloader .preloader-bar { width: 140px; height: 1px; background: rgba(255,255,255,0.15); overflow: hidden; }
+  #preloader .preloader-bar-fill { width: 0%; height: 100%; background: #6d5bf5; }
+
+  /* Footer is pinned under the page (native sticky) so the content above scrolls away like a
+     curtain and uncovers the wordmark top-first. Every section must paint over it opaquely. */
+  main > footer { position: sticky; bottom: 0; z-index: 0; }
+  main > section { position: relative; z-index: 1; }
+  /* Mirror move for the hero: pinned to the top, swallowed bottom-first by the showreel as it
+     rides up. JS hides it once fully covered so it can't fight the footer's layer at page end. */
+  main > #hero { position: sticky; top: 0; }
+
+  .megamark {
+    font-weight: 500; letter-spacing: -0.05em; line-height: 0.78;
+    font-size: 13.2vw; white-space: nowrap; text-align: center;
+    width: 100vw; user-select: none;
+    padding-bottom: 0.12em;
+  }
+
+  .reveal-word { opacity: 0.12; will-change: opacity; }
+  .line-mask { overflow: hidden; display: block; }
+  .line-inner { display: block; transform: translateY(110%); }
+  .mm-l { display: inline-block; will-change: transform; }
+
+  .btn-blue { background:#6d5bf5; color:#fff; }
+  .btn-blue:hover { background:#fff; color:#000; }
+  .btn-ghost { border:1px solid rgba(255,255,255,0.25); color:#fff; }
+  .btn-ghost:hover { background:#fff; color:#000; }
+
+  .btn-glow {
+    display: inline-flex; align-items: stretch;
+    background: #262626; color: #fff;
+    font-family: 'Sora', sans-serif;
+    font-weight: 500; font-size: 1em; letter-spacing: -0.01em;
+    border-radius: 40px; border: 2px solid #262626;
+    overflow: hidden; position: relative; text-decoration: none;
+    cursor: pointer; transition: box-shadow 0.3s ease;
+  }
+  .btn-glow:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.4); }
+  .btn-glow .rb-default {
+    position: relative; display: flex; align-items: center; justify-content: center;
+    background: #262626; color: #fff; border-radius: 38px; z-index: 1;
+    white-space: nowrap; transition: opacity 0.3s;
+  }
+  .btn-glow .rb-hover {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    color: #262626; font-weight: 500; white-space: nowrap;
+    visibility: hidden; opacity: 0; z-index: 3; transition: opacity 0.3s;
+  }
+  .btn-glow .rb-overlay {
+    position: absolute; inset: 0; border-radius: 38px; background: #fafafa;
+    transform: scaleX(0); transform-origin: right center; z-index: 2;
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+  .btn-glow:hover .rb-overlay { transform: scaleX(1); transform-origin: left center; }
+  .btn-glow:hover .rb-hover { opacity: 1; visibility: visible; }
+  .btn-glow:active { opacity: 0.85; }
+
+  .mega-link {
+    display: inline-block; font-weight: 400; letter-spacing: -0.03em;
+    font-size: clamp(2rem, 5vw, 4.5rem); line-height: 1.1;
+    text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.14em;
+    transition: color 0.3s ease, text-decoration-color 0.3s ease;
+  }
+  .mega-link:hover { color: #6d5bf5; }
+
+
+  #cursor { position: fixed; top: 0; left: 0; width: 12px; height: 12px; border-radius: 50%; background: #6d5bf5; z-index: 90; pointer-events: none; transform: translate(-50%, -50%); transition: width .3s, height .3s, opacity .3s; }
+  #cursor.grow { width: 56px; height: 56px; opacity: .3; }
+  @media (hover: none) { #cursor { display: none; } }
+
+  .card-media { overflow:hidden; }
+  .card-media img { transition: transform 0.9s cubic-bezier(.16,1,.3,1); }
+  .card-media:hover img { transform: scale(1.06); }
+
+  /* Collapsing nav logo: "TheImageDept" -> "TID" past 60px of scroll */
+  .logo-text { display: inline-block; font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.5; color: #fff; white-space: nowrap; }
+  .lk { display: inline-block; vertical-align: top; }
+  .lg {
+    display: inline-block; overflow: hidden; vertical-align: top;
+    font-size: 1em; opacity: 1;
+    transition: font-size 1s cubic-bezier(0.51, 0, 0.08, 1), opacity 0.6s ease-out;
+  }
+  #nav.scrolled .lg {
+    font-size: 0; opacity: 0;
+    transition: font-size 0.85s cubic-bezier(0.51, 0, 0.08, 1), opacity 0.18s ease-in;
+  }
+
+  #glance-track { scrollbar-width: none; -ms-overflow-style: none; }
+  #glance-track::-webkit-scrollbar { display: none; }
+  #glance-track.dragging { cursor: grabbing; }
+  #glance-track.dragging a { pointer-events: none; }
+  .glance-card { border-radius: 0; }
+
+
+  .approach-step { opacity: 0.35; transition: opacity 0.5s ease; }
+  .approach-step.active { opacity: 1; }
+  .approach-track-fill { transition: height 0.1s linear; }
+
+  /* Placeholder gradient behind the hero video — swap in your own footage at brand_assets/hero-film.mp4 */
+  #expand-pin { background: radial-gradient(120% 100% at 50% 100%, #2a2440 0%, #100e1c 55%, #000 100%); }
+</style>
+</head>
+
+<body class="grain overflow-x-hidden w-full max-w-full antialiased">
+
+<div id="cursor"></div>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <span class="preloader-mark">theimagedept<span class="text-blue">.</span></span>
+  <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+</div>
+
+<!-- NAV -->
+<header id="nav" class="fixed top-0 left-0 right-0 z-50 opacity-0">
+  <nav class="flex items-center justify-between px-6 md:px-10 py-4 bg-black/50 backdrop-blur-md">
+    <a href="index.html" class="flex items-center" data-hover aria-label="TheImageDept">
+      <span class="logo-text"><span class="lk">T</span><span class="lg">h</span><span class="lg">e</span><span class="lk">I</span><span class="lg">m</span><span class="lg">a</span><span class="lg">g</span><span class="lg">e</span><span class="lk">D</span><span class="lg">e</span><span class="lg">p</span><span class="lg">t</span></span>
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-sm text-white/70">
+      <a href="faq.html" class="uline hover:text-white transition-colors" data-hover>FAQ</a>
+    </div>
+    <a href="contact.html" class="text-sm underline underline-offset-4 decoration-white/40 hover:decoration-blue hover:text-blue transition-colors" data-hover>Let's talk <svg class="inline-block w-[0.68em] h-[0.68em] -translate-y-[1px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- CHAPTER 1 (BLACK): GIANT WORDMARK HERO -->
+  <section id="hero" class="bg-black pt-24 md:pt-28 pb-0">
+    <h1 class="line-mask"><span class="line-inner megamark">theimagedept<span class="text-blue">.</span></span></h1>
+    <div class="hero-fade flex flex-col md:flex-row justify-between gap-4 px-6 md:px-10 pt-8 pb-10 text-sm text-white/60 opacity-0">
+      <span>Design, Systems,<br class="hidden md:block"/> Automation.</span>
+      <span class="max-w-xs md:text-right">Custom websites, management systems & automations for businesses — fast, built to turn visitors into customers.</span>
+    </div>
+  </section>
+
+  <!-- CHAPTER 1b (BLACK): SHOWREEL — black curtain shrinks to reveal footage.
+       Drop your own clip at brand_assets/hero-film.mp4 (+ poster) to replace the gradient. -->
+  <section id="expand-wrap" class="relative bg-black h-[200vh]">
+    <div id="expand-pin" class="sticky top-0 overflow-hidden" style="height: 100vh; height: 100svh; height: 100dvh;">
+      <figure id="expand-img" class="absolute inset-0" style="clip-path: inset(100% 0 0 0); will-change: clip-path;" aria-label="Studio showreel">
+        <video id="hero-film" src="brand_assets/hero-film.mp4" poster="brand_assets/hero-poster.jpg" autoplay muted loop playsinline preload="metadata" class="w-full h-full object-cover"></video>
+        <div id="film-logo" class="absolute inset-x-0 top-[16%] flex justify-center pointer-events-none">
+          <span class="text-white text-4xl md:text-7xl font-light tracking-tight" style="text-shadow: 0 2px 30px rgba(0,0,0,0.3);">theimagedept<span class="text-blue">.</span></span>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- CHAPTER 2 (WHITE): MANIFESTO -->
+  <section class="relative z-10 bg-sand text-ink py-32 md:py-48 px-6 md:px-10" style="margin-top: -100vh;">
+    <div class="max-w-5xl mx-auto">
+      <p id="manifesto" class="text-3xl md:text-5xl leading-[1.25] tracking-tight font-light">
+        We help businesses run better and look better — pairing sharp design, custom management systems, and smart automation under one roof.
+      </p>
+      <p class="reveal-up mt-10 text-lg text-ink/60">
+        Most business sites quietly lose the sale before it starts. <a href="contact.html" class="underline underline-offset-4 decoration-ink/30 hover:text-blue hover:decoration-blue transition-colors" data-hover>We build the one that closes it.</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- CHAPTER 2b (WHITE): EDITORIAL ROW -->
+  <section class="relative z-10 bg-sand text-ink pb-28 md:pb-40 px-6 md:px-10 border-b border-ink/10">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10 text-sm leading-relaxed">
+      <span class="text-ink/40">Tomorrow's tools, today.</span>
+      <p class="text-ink/70">Every website, system, and automation is built from scratch — no page builders, no bloated software. That means faster load times, cleaner workflows, and something that's genuinely yours.</p>
+      <p class="text-ink/70">We only take on a handful of projects at once, so each one gets real attention. You work directly with the person building it.<br/><a href="about.html" class="inline-block mt-3 underline underline-offset-4 decoration-ink/30 hover:text-blue hover:decoration-blue transition-colors" data-hover>Get to know us <svg class="inline-block w-[0.68em] h-[0.68em] -translate-y-[1px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></p>
+    </div>
+  </section>
+
+  <!-- CHAPTER 4 (WHITE): APPROACH — sticky index on the left, steps scroll past on the right -->
+  <section id="approach" class="bg-sand text-ink py-28 md:py-40 px-6 md:px-10">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-[1fr_1.5fr] gap-10 md:gap-20">
+
+      <div class="reveal-up md:sticky md:top-32 self-start">
+        <h2 class="text-5xl md:text-7xl tracking-tight font-light mb-8">Our approach.</h2>
+        <div class="flex items-center gap-4">
+          <div class="relative w-px h-16 bg-ink/15">
+            <div class="approach-track-fill absolute top-0 left-0 w-px bg-blue" style="height:0%"></div>
+          </div>
+          <span class="text-sm text-ink/40 tabular-nums"><span class="approach-index-num">01</span> <span class="text-ink/20">/ 02</span></span>
+        </div>
+      </div>
+
+      <div class="space-y-24 md:space-y-32">
+        <div class="approach-step" data-step="1">
+          <span class="text-sm text-blue font-semibold">01</span>
+          <h3 class="text-2xl md:text-3xl font-medium mt-3 mb-4">Quality over quantity.</h3>
+          <p class="text-ink/60 text-lg leading-relaxed max-w-md">We only work with a few clients at a time so every project gets full focus. Every detail considered, every decision intentional, every outcome built to convert.</p>
+        </div>
+        <div class="approach-step" data-step="2">
+          <span class="text-sm text-blue font-semibold">02</span>
+          <h3 class="text-2xl md:text-3xl font-medium mt-3 mb-4">You're involved every step.</h3>
+          <p class="text-ink/60 text-lg leading-relaxed max-w-md">Fully custom to your brand. You'll review a draft, share feedback, and we refine until it's right. Nothing goes live until you approve it.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CHAPTER 4a (WHITE): AT A GLANCE — horizontal card strip -->
+  <section id="glance" class="bg-sand text-ink pb-28 md:pb-40">
+    <div class="px-6 md:px-10">
+      <div class="border-t border-ink/10 pt-5 pb-8 flex flex-wrap items-center justify-between gap-4">
+        <span class="reveal-up">TheImageDept at a glance.</span>
+        <a href="mailto:michael.amos5496@gmail.com" class="reveal-up hover:text-blue transition-colors" data-hover>EMAIL</a>
+      </div>
+    </div>
+
+    <div id="glance-track" class="flex items-start gap-4 overflow-x-auto px-6 md:px-10 pb-2 cursor-grab select-none">
+
+      <!-- Portfolio: Efuab -->
+      <div class="glance-card flex-shrink-0 w-[85vw] md:w-[420px] h-[500px] bg-white overflow-hidden flex flex-col" data-hover>
+        <div class="flex items-center gap-2.5 px-4 py-2.5 flex-shrink-0" style="background:#f1f3f4;">
+          <div class="flex gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#ff5f57;"></span>
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#febc2e;"></span>
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#28c840;"></span>
+          </div>
+          <div class="flex-1 bg-white rounded-full px-3 py-1 text-xs truncate" style="border:1px solid #dadce0;color:#555;">efuab.com</div>
+        </div>
+        <div class="relative flex-shrink-0 overflow-hidden" style="height:300px;background:#f4f4f4;">
+          <iframe src="https://www.efuab.com" title="Efuab preview" loading="lazy" tabindex="-1" aria-hidden="true" style="position:absolute;top:0;left:0;width:100%;height:700px;border:0;pointer-events:none;"></iframe>
+        </div>
+        <div class="p-5 flex-1 flex flex-col min-h-0">
+          <p class="text-[10px] font-semibold uppercase tracking-widest text-ink/40 mb-1.5">Selected work</p>
+          <p class="text-base font-semibold mb-1.5">Efuab &mdash; Luxury Beauty Studio</p>
+          <p class="text-sm text-ink/50 leading-relaxed mb-4" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">A booking-ready site for a premium lash, makeup &amp; bridal beauty studio in Accra.</p>
+          <a href="https://www.efuab.com" target="_blank" rel="noopener noreferrer" class="mt-auto text-sm underline underline-offset-4 decoration-ink/30 hover:text-blue hover:decoration-blue transition-colors">Visit site &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Portfolio: BrandMotion Studios -->
+      <div class="glance-card flex-shrink-0 w-[85vw] md:w-[420px] h-[500px] bg-white overflow-hidden flex flex-col" data-hover>
+        <div class="flex items-center gap-2.5 px-4 py-2.5 flex-shrink-0" style="background:#f1f3f4;">
+          <div class="flex gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#ff5f57;"></span>
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#febc2e;"></span>
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#28c840;"></span>
+          </div>
+          <div class="flex-1 bg-white rounded-full px-3 py-1 text-xs truncate" style="border:1px solid #dadce0;color:#555;">brandmotionstudios.com</div>
+        </div>
+        <div class="relative flex-shrink-0 overflow-hidden" style="height:300px;background:#f4f4f4;">
+          <iframe src="https://www.brandmotionstudios.com" title="BrandMotion Studios preview" loading="lazy" tabindex="-1" aria-hidden="true" style="position:absolute;top:0;left:0;width:100%;height:700px;border:0;pointer-events:none;"></iframe>
+        </div>
+        <div class="p-5 flex-1 flex flex-col min-h-0">
+          <p class="text-[10px] font-semibold uppercase tracking-widest text-ink/40 mb-1.5">Selected work</p>
+          <p class="text-base font-semibold mb-1.5">BrandMotion Studios &mdash; Film &amp; Brand Content</p>
+          <p class="text-sm text-ink/50 leading-relaxed mb-4" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">A cinematic showcase site for a film studio producing brand films and fashion campaigns across Africa.</p>
+          <a href="https://www.brandmotionstudios.com" target="_blank" rel="noopener noreferrer" class="mt-auto text-sm underline underline-offset-4 decoration-ink/30 hover:text-blue hover:decoration-blue transition-colors">Visit site &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Portfolio: HERE WE ARE -->
+      <div class="glance-card flex-shrink-0 w-[85vw] md:w-[420px] h-[500px] bg-white overflow-hidden flex flex-col" data-hover>
+        <div class="flex items-center gap-2.5 px-4 py-2.5 flex-shrink-0" style="background:#f1f3f4;">
+          <div class="flex gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#ff5f57;"></span>
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#febc2e;"></span>
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#28c840;"></span>
+          </div>
+          <div class="flex-1 bg-white rounded-full px-3 py-1 text-xs truncate" style="border:1px solid #dadce0;color:#555;">hereweare.vercel.app</div>
+        </div>
+        <div class="relative flex-shrink-0 overflow-hidden" style="height:300px;background:#f4f4f4;">
+          <iframe src="https://hereweare.vercel.app/" title="HERE WE ARE preview" loading="lazy" tabindex="-1" aria-hidden="true" style="position:absolute;top:0;left:0;width:100%;height:700px;border:0;pointer-events:none;"></iframe>
+        </div>
+        <div class="p-5 flex-1 flex flex-col min-h-0">
+          <p class="text-[10px] font-semibold uppercase tracking-widest text-ink/40 mb-1.5">Selected work</p>
+          <p class="text-base font-semibold mb-1.5">HERE WE ARE &mdash; Visual Storytelling Studio</p>
+          <p class="text-sm text-ink/50 leading-relaxed mb-4" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">A cinematic portfolio site for a photography &amp; film studio shooting brand, culture, and documentary work.</p>
+          <a href="https://hereweare.vercel.app/" target="_blank" rel="noopener noreferrer" class="mt-auto text-sm underline underline-offset-4 decoration-ink/30 hover:text-blue hover:decoration-blue transition-colors">Visit site &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Portfolio: Aggor Yorm -->
+      <div class="glance-card flex-shrink-0 w-[85vw] md:w-[420px] h-[500px] bg-white overflow-hidden flex flex-col" data-hover>
+        <div class="flex items-center gap-2.5 px-4 py-2.5 flex-shrink-0" style="background:#f1f3f4;">
+          <div class="flex gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#ff5f57;"></span>
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#febc2e;"></span>
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#28c840;"></span>
+          </div>
+          <div class="flex-1 bg-white rounded-full px-3 py-1 text-xs truncate" style="border:1px solid #dadce0;color:#555;">aggor-yorm.vercel.app</div>
+        </div>
+        <div class="relative flex-shrink-0 overflow-hidden" style="height:300px;background:#f4f4f4;">
+          <iframe src="https://aggor-yorm.vercel.app/" title="Aggor Yorm preview" loading="lazy" tabindex="-1" aria-hidden="true" style="position:absolute;top:0;left:0;width:100%;height:700px;border:0;pointer-events:none;"></iframe>
+        </div>
+        <div class="p-5 flex-1 flex flex-col min-h-0">
+          <p class="text-[10px] font-semibold uppercase tracking-widest text-ink/40 mb-1.5">Selected work</p>
+          <p class="text-base font-semibold mb-1.5">Aggor Yorm &mdash; Media Producer &amp; Director</p>
+          <p class="text-sm text-ink/50 leading-relaxed mb-4" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">A portfolio site for a creative director crafting African stories across TV, documentary, and branded content.</p>
+          <a href="https://aggor-yorm.vercel.app/" target="_blank" rel="noopener noreferrer" class="mt-auto text-sm underline underline-offset-4 decoration-ink/30 hover:text-blue hover:decoration-blue transition-colors">Visit site &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CHAPTER 4c (WHITE): MEGA LINK -->
+  <section class="bg-sand text-ink pb-32 md:pb-44 px-6 md:px-10 text-center">
+    <a href="contact.html" class="mega-link reveal-up" data-hover>Get to know us</a>
+  </section>
+
+  <!-- CHAPTER 5 (BLACK): CTA BAND (Three.js shader) -->
+  <section id="cta-launch" style="position:relative; overflow:hidden; min-height:520px; display:flex; align-items:center; justify-content:center; background:#000;">
+    <div id="shader-canvas-container" style="position:absolute; inset:0; z-index:0;"></div>
+    <div style="position:absolute; inset:0; z-index:1; background:rgba(0,0,0,0.52); pointer-events:none;"></div>
+    <div style="position:relative; z-index:2; padding:6em 2em; text-align:center; max-width:72rem; margin:0 auto;">
+      <p style="color:#6d5bf5; font-size:0.8125em; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:1.25em;">Let's Build It</p>
+      <h2 style="font-size:clamp(2.25rem,5vw,4rem); font-weight:700; letter-spacing:-0.03em; color:#fff; margin-bottom:0.75em; line-height:1.08;">
+        Your Vision, Built Right.
+      </h2>
+      <p style="color:rgba(255,255,255,0.6); font-size:1.125em; line-height:1.7; max-width:480px; margin:0 auto 2.5em;">
+        Get a fast, custom site — or the system and automation behind it — built to grow your business. Tell us what you do, and we'll show you what's possible.
+      </p>
+      <div style="display:flex; align-items:center; justify-content:center; gap:0.875em; flex-wrap:wrap;">
+        <a href="contact.html" class="btn-glow" style="font-size:1em;" data-hover>
+          <span class="rb-default" style="padding:0.875em 2.25em;">Start Your Project &rarr;</span>
+          <span class="rb-hover" style="padding:0.875em 2.25em;">Start Your Project &rarr;</span>
+          <span class="rb-overlay"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-black border-t border-white/10 px-6 md:px-10 pt-16 pb-4 overflow-hidden">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-5 gap-10 mb-16 text-sm">
+      <div class="md:col-span-2">
+        <span class="text-white/40 block mb-2">Contact</span>
+        <a href="mailto:michael.amos5496@gmail.com" class="uline text-white/80 hover:text-blue transition-colors" data-hover>EMAIL</a><br/>
+                <a href="https://wa.me/233541479680" target="_blank" rel="noopener noreferrer" class="uline text-white/80 hover:text-blue transition-colors" data-hover>WHATSAPP</a>
+      </div>
+      <div>
+        <span class="text-white/40 block mb-2">Company</span>
+        <ul class="space-y-1.5 text-white/70">
+          <li><a href="faq.html" class="uline hover:text-blue" data-hover>FAQ</a></li>
+          <li><a href="contact.html" class="uline hover:text-blue" data-hover>Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="text-white/40 block mb-2">Social</span>
+        <!-- Placeholder links — point these at your real profiles -->
+        <ul class="space-y-1.5 text-white/70">
+          <li><a href="https://www.instagram.com/theimagedept_/" target="_blank" rel="noopener noreferrer" class="uline hover:text-blue" data-hover>Instagram</a></li>
+          <li><a href="#" class="uline hover:text-blue" data-hover>TikTok</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="text-white/40 block mb-2">Legal</span>
+        <ul class="space-y-1.5 text-white/70">
+          <li><a href="terms.html" class="uline hover:text-blue" data-hover>Terms</a></li>
+          <li><a href="privacy.html" class="uline hover:text-blue" data-hover>Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between gap-4 text-xs text-white/30 pb-6">
+      <span>&copy; 2026 TheImageDept. All rights reserved.</span>
+      <span>Developed by TheImageDept.</span>
+    </div>
+
+    <div id="wordmark" class="megamark text-white select-none">theimagedept<span class="text-blue">.</span></div>
+  </footer>
+
+</main>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const hash = '#' + (a.getAttribute('href').split('#')[1] || '');
+      const target = hash.length > 1 && document.querySelector(hash);
+      if (target) { e.preventDefault(); lenis.scrollTo(target, { offset: -20 }); }
+    });
+  });
+
+  // Hero wordmark intro: split into per-letter spans so they drop in from the top,
+  // staggered left-to-right, clipped by .line-mask until they land.
+  (function () {
+    const mark = document.querySelector('#hero .megamark');
+    mark.innerHTML = [...mark.textContent.trim()].map((ch) =>
+      `<span class="mm-l${ch === '.' ? ' text-blue' : ''}">${ch}</span>`
+    ).join('');
+    gsap.set(mark, { y: '0%' });
+    gsap.set('.mm-l', { yPercent: -120 });
+  })();
+
+  // Preloader
+  (function () {
+    const pre = document.getElementById('preloader');
+    const fill = pre.querySelector('.preloader-bar-fill');
+    const state = { v: 0 };
+    lenis.stop();
+    gsap.to(state, {
+      v: 100, duration: 1.4, ease: 'power2.inOut',
+      onUpdate: () => { fill.style.width = state.v + '%'; },
+      onComplete: () => {
+        gsap.to(pre, {
+          yPercent: -100, duration: 0.9, ease: 'power4.inOut', delay: 0.15,
+          onComplete: () => { pre.remove(); lenis.start(); ScrollTrigger.refresh(); },
+        });
+        gsap.to('.mm-l', { yPercent: 0, duration: 1.3, ease: 'power4.out', stagger: 0.07, delay: 0.5 });
+        gsap.to('.hero-fade', { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: 'power2.out', delay: 1.0 });
+        gsap.to('#nav', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 1.1 });
+      },
+    });
+  })();
+
+  // Hero wordmark drifts down while the showreel covers it (mirrors the footer reveal),
+  // so scrolling back up brings it in from the bottom. Range is anchored to absolute
+  // scroll so nothing is pre-applied at load on any screen.
+  (function () {
+    gsap.to('#hero .megamark', {
+      yPercent: 35, ease: 'none',
+      scrollTrigger: {
+        start: 0,
+        end: () => document.getElementById('expand-wrap').offsetTop,
+        scrub: true, invalidateOnRefresh: true,
+      },
+    });
+    ScrollTrigger.create({
+      trigger: '#expand-wrap', start: 'top top',
+      onEnter: () => gsap.set('#hero', { autoAlpha: 0 }),
+      onLeaveBack: () => gsap.set('#hero', { autoAlpha: 1 }),
+    });
+  })();
+
+  // Scrubbing word reveal (dark on white)
+  (function () {
+    const p = document.getElementById('manifesto');
+    const words = p.textContent.trim().split(/\s+/);
+    p.innerHTML = words.map((w) => `<span class="reveal-word">${w}</span>`).join(' ');
+    gsap.to(p.querySelectorAll('.reveal-word'), {
+      opacity: 1, stagger: 1, ease: 'none',
+      scrollTrigger: { trigger: p, start: 'top 78%', end: 'bottom 55%', scrub: true },
+    });
+  })();
+
+  // Showreel curtain reveal: the footage rises from the bottom edge as the section scrolls
+  // in, using native position:sticky (no GSAP pin) so Lenis can't fight it.
+  (function () {
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+    gsap.to('#expand-img', {
+      clipPath: 'inset(0% 0 0% 0)', ease: 'none',
+      scrollTrigger: {
+        trigger: '#expand-wrap', start: 'top bottom', end: 'top 15%',
+        scrub: true, invalidateOnRefresh: true,
+      },
+    });
+    gsap.fromTo('#expand-img video', { scale: isDesktop ? 1.2 : 1.08 }, {
+      scale: 1, ease: 'none',
+      scrollTrigger: {
+        trigger: '#expand-wrap', start: 'top top', end: 'bottom bottom',
+        scrub: true, invalidateOnRefresh: true,
+      },
+    });
+  })();
+
+  // Hero film: wordmark fades in during the final hold, pauses offscreen to save battery
+  (function () {
+    const film = document.getElementById('hero-film');
+    const logo = document.getElementById('film-logo');
+    if (!film || !logo) return;
+    film.addEventListener('timeupdate', () => {
+      if (!film.duration) return;
+      logo.classList.toggle('show', film.duration - film.currentTime < 2.8);
+    });
+    new IntersectionObserver((entries) => {
+      entries.forEach((e) => { e.isIntersecting ? film.play().catch(() => {}) : film.pause(); });
+    }, { rootMargin: '200px' }).observe(film);
+  })();
+
+  gsap.utils.toArray('.reveal-up').forEach((el) => {
+    gsap.from(el, {
+      opacity: 0, y: 40, duration: 1, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' },
+    });
+  });
+
+  // Approach section: sticky index on the left tracks which step is active on the right,
+  // and a thin progress line fills as you scroll through the three steps.
+  (function () {
+    const section = document.getElementById('approach');
+    const steps = gsap.utils.toArray('.approach-step');
+    const numEl = document.querySelector('.approach-index-num');
+    const fill = document.querySelector('.approach-track-fill');
+    if (!section || !steps.length) return;
+
+    function setActive(i) {
+      steps.forEach((s, idx) => s.classList.toggle('active', idx === i));
+      if (numEl) numEl.textContent = String(i + 1).padStart(2, '0');
+    }
+    steps.forEach((step, i) => {
+      ScrollTrigger.create({
+        trigger: step, start: 'top center', end: 'bottom center',
+        onEnter: () => setActive(i), onEnterBack: () => setActive(i),
+      });
+    });
+
+    if (fill) {
+      gsap.to(fill, {
+        height: '100%', ease: 'none',
+        scrollTrigger: { trigger: section, start: 'top center', end: 'bottom center', scrub: true },
+      });
+    }
+  })();
+
+  // Footer wordmark descends from above as the curtain uncovers the pinned footer.
+  // Trigger is the last in-flow section, not the footer itself — sticky elements report
+  // their stuck rect at refresh, which corrupts ScrollTrigger's start/end math.
+  (function () {
+    gsap.from('#wordmark', {
+      yPercent: -45, ease: 'none',
+      scrollTrigger: {
+        trigger: '#cta-launch',
+        start: 'bottom bottom',
+        end: () => `bottom bottom-=${Math.max(1, document.querySelector('main > footer').offsetHeight - 120)}`,
+        scrub: true, invalidateOnRefresh: true,
+      },
+    });
+  })();
+
+  gsap.utils.toArray('.card-media img').forEach((img) => {
+    gsap.fromTo(img, { scale: 1.12 }, {
+      scale: 1, ease: 'none',
+      scrollTrigger: { trigger: img, start: 'top bottom', end: 'bottom top', scrub: true },
+    });
+  });
+
+  // CTA band: interactive grid ripple — a faint grid that warps outward from the
+  // cursor as you move over the section. Canvas 2D, no library dependency.
+  window.addEventListener('load', function () {
+    (function () {
+      var container = document.getElementById('shader-canvas-container');
+      if (!container) return;
+      var canvas = document.createElement('canvas');
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.style.display = 'block';
+      container.appendChild(canvas);
+      var ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      var SPACING = 48, RIPPLE_LIFE = 1600, RIPPLE_SPEED = 0.5, BAND = 60, AMPLITUDE = 14;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var w = 0, h = 0, points = [], ripples = [], lastRippleTime = 0;
+
+      function resize() {
+        w = container.clientWidth; h = container.clientHeight;
+        canvas.width = w * dpr; canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        var cols = Math.ceil(w / SPACING) + 1, rows = Math.ceil(h / SPACING) + 1;
+        points = [];
+        for (var j = 0; j <= rows; j++) {
+          var row = [];
+          for (var i = 0; i <= cols; i++) row.push({ x0: i * SPACING, y0: j * SPACING, x: i * SPACING, y: j * SPACING, glow: 0 });
+          points.push(row);
+        }
+      }
+      resize();
+      window.addEventListener('resize', resize, { passive: true });
+
+      container.addEventListener('pointermove', function (e) {
+        var r = container.getBoundingClientRect();
+        var now = performance.now();
+        if (now - lastRippleTime < 90) return;
+        lastRippleTime = now;
+        ripples.push({ x: e.clientX - r.left, y: e.clientY - r.top, start: now });
+        if (ripples.length > 25) ripples.shift();
+      }, { passive: true });
+
+      function lineColor(g) {
+        var a = 0.05 + g * 0.5;
+        var r = Math.round(255 - g * (255 - 109));
+        var gg = Math.round(255 - g * (255 - 91));
+        var b = Math.round(255 - g * (255 - 245));
+        return 'rgba(' + r + ',' + gg + ',' + b + ',' + a + ')';
+      }
+
+      function render(now) {
+        ctx.clearRect(0, 0, w, h);
+        ripples = ripples.filter(function (rp) { return now - rp.start < RIPPLE_LIFE; });
+
+        for (var j = 0; j < points.length; j++) {
+          for (var i = 0; i < points[j].length; i++) {
+            var p = points[j][i];
+            var dx = 0, dy = 0, glow = 0;
+            for (var k = 0; k < ripples.length; k++) {
+              var rp = ripples[k];
+              var age = now - rp.start;
+              var radius = age * RIPPLE_SPEED;
+              var ddx = p.x0 - rp.x, ddy = p.y0 - rp.y;
+              var dist = Math.sqrt(ddx * ddx + ddy * ddy);
+              var diff = dist - radius;
+              if (Math.abs(diff) < BAND) {
+                var falloff = 1 - Math.abs(diff) / BAND;
+                var timeFade = 1 - age / RIPPLE_LIFE;
+                var amt = AMPLITUDE * falloff * timeFade;
+                if (dist > 0.01) { dx += (ddx / dist) * amt; dy += (ddy / dist) * amt; }
+                glow += falloff * timeFade;
+              }
+            }
+            p.x = p.x0 + dx; p.y = p.y0 + dy; p.glow = Math.min(glow, 1);
+          }
+        }
+
+        ctx.lineWidth = 1;
+        for (var j2 = 0; j2 < points.length; j2++) {
+          var row = points[j2];
+          for (var i2 = 0; i2 < row.length - 1; i2++) {
+            var a1 = row[i2], a2 = row[i2 + 1];
+            ctx.strokeStyle = lineColor(Math.max(a1.glow, a2.glow));
+            ctx.beginPath(); ctx.moveTo(a1.x, a1.y); ctx.lineTo(a2.x, a2.y); ctx.stroke();
+          }
+        }
+        for (var i3 = 0; i3 < points[0].length; i3++) {
+          for (var j3 = 0; j3 < points.length - 1; j3++) {
+            var b1 = points[j3][i3], b2 = points[j3 + 1][i3];
+            ctx.strokeStyle = lineColor(Math.max(b1.glow, b2.glow));
+            ctx.beginPath(); ctx.moveTo(b1.x, b1.y); ctx.lineTo(b2.x, b2.y); ctx.stroke();
+          }
+        }
+        requestAnimationFrame(render);
+      }
+      requestAnimationFrame(render);
+    })();
+  });
+
+  // Nav logo collapse: "TheImageDept" -> "TID" past 60px
+  (function () {
+    const navEl = document.getElementById('nav');
+    function onScroll() { navEl.classList.toggle('scrolled', (window.scrollY || 0) > 60); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    lenis.on('scroll', onScroll);
+  })();
+
+  // "At a glance" strip: cards stagger in, the strip drifts on its own
+  // (slow continuous auto-scroll, seamless loop), and you can still grab it.
+  (function () {
+    const track = document.getElementById('glance-track');
+    if (!track) return;
+
+    gsap.from('.glance-card', {
+      opacity: 0, y: 36, duration: 0.9, stagger: 0.08, ease: 'power3.out',
+      scrollTrigger: { trigger: '#glance', start: 'top 80%' },
+    });
+
+    let down = false, startX = 0, startScroll = 0;
+    track.addEventListener('pointerdown', (e) => {
+      auto = false;
+      if (e.pointerType !== 'mouse') { scheduleResume(); return; }
+      down = true; startX = e.clientX; startScroll = track.scrollLeft;
+    });
+    window.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      if (Math.abs(e.clientX - startX) > 4) track.classList.add('dragging');
+      track.scrollLeft = startScroll - (e.clientX - startX);
+    });
+    window.addEventListener('pointerup', () => {
+      if (down) { down = false; setTimeout(() => track.classList.remove('dragging'), 0); }
+      scheduleResume();
+    });
+
+    let auto = true, wrapDelta = 0, pos = 0, resumeTimer = null;
+    let hovering = false;
+    const SPEED = 60;
+    function scheduleResume() {
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => { if (!hovering && !down) { pos = track.scrollLeft; auto = true; } }, 2200);
+    }
+    // Delegated (not mouseenter/leave on the track) so hovering a card — including
+    // clones created later by cloneSet() — pauses the drift, but the gaps between
+    // cards don't.
+    track.addEventListener('pointerover', (e) => {
+      if (e.target.closest('.glance-card')) { hovering = true; auto = false; }
+    });
+    track.addEventListener('pointerout', (e) => {
+      const card = e.target.closest('.glance-card');
+      if (card && !card.contains(e.relatedTarget)) { hovering = false; scheduleResume(); }
+    });
+    track.addEventListener('scroll', () => { if (!auto) pos = track.scrollLeft; }, { passive: true });
+
+    let last = performance.now();
+    function drift(now) {
+      const dt = Math.min((now - last) / 1000, 0.1);
+      last = now;
+      if (auto && wrapDelta > 0) {
+        pos += SPEED * dt;
+        if (pos >= wrapDelta) pos -= wrapDelta;
+        track.scrollLeft = pos;
+      }
+      requestAnimationFrame(drift);
+    }
+    requestAnimationFrame(drift);
+
+    let cloned = false;
+    function cloneSet() {
+      if (cloned) return;
+      cloned = true;
+      const cards = Array.from(track.children);
+      cards.forEach((card) => {
+        const copy = card.cloneNode(true);
+        copy.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+        copy.removeAttribute('id');
+        copy.setAttribute('aria-hidden', 'true');
+        copy.style.opacity = '';
+        copy.style.transform = '';
+        track.appendChild(copy);
+      });
+      const clone0 = track.children[cards.length];
+      wrapDelta = clone0.offsetLeft - cards[0].offsetLeft;
+    }
+    window.addEventListener('load', cloneSet, { once: true });
+    setTimeout(cloneSet, 1500);
+  })();
+
+  window.addEventListener('load', () => ScrollTrigger.refresh());
+
+  // Cursor dot
+  (function () {
+    const cur = document.getElementById('cursor');
+    if (!window.matchMedia('(hover: hover)').matches) return;
+    const xTo = gsap.quickTo(cur, 'x', { duration: 0.35, ease: 'power3' });
+    const yTo = gsap.quickTo(cur, 'y', { duration: 0.35, ease: 'power3' });
+    window.addEventListener('pointermove', (e) => { xTo(e.clientX); yTo(e.clientY); });
+    document.querySelectorAll('[data-hover]').forEach((el) => {
+      el.addEventListener('pointerenter', () => cur.classList.add('grow'));
+      el.addEventListener('pointerleave', () => cur.classList.remove('grow'));
+    });
+  })();
+</script>
+</body>
+</html>

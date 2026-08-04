@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FAQ — TheImageDept</title>
+<link rel="canonical" href="https://theimagedept.com/faq.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="TheImageDept" />
+<meta property="og:url" content="https://theimagedept.com/faq.html" />
+<meta property="og:title" content="FAQ — TheImageDept" />
+<meta property="og:description" content="Answers to the questions we get most about websites, management systems, and automations." />
+<meta property="og:image" content="https://theimagedept.com/brand_assets/og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="FAQ — TheImageDept" />
+<meta name="twitter:description" content="Answers to the questions we get most about websites, management systems, and automations." />
+<meta name="twitter:image" content="https://theimagedept.com/brand_assets/og-image.jpg" />
+<meta name="description" content="Answers to the questions we get most about websites, management systems, and automations." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ctext x='30' y='42' font-family='Arial,sans-serif' font-size='27' font-weight='800' fill='%23fff' text-anchor='middle'%3EID.%3C/text%3E%3C/svg%3E" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          blue: '#6d5bf5',
+          bluedim: 'rgba(109,91,245,0.15)',
+          ink: '#131518',
+          g800: '#222529',
+          g500: '#6c7584',
+          g300: '#a1a7b2',
+          sand: '#f8f7f7',
+        },
+        fontFamily: {
+          sans: ['Sora', 'Arial', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+
+<!-- GSAP + Lenis -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+
+<style>
+  html { scroll-behavior: auto; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body { background: #000; color: #fff; font-family: 'Sora', Arial, sans-serif; -webkit-font-smoothing: antialiased; overscroll-behavior: none; }
+  ::selection { background: #6d5bf5; color: #fff; }
+
+  .grain::before {
+    content: "";
+    position: fixed; inset: 0; z-index: 40; pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .uline { position: relative; }
+  .uline::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1px;
+    background: currentColor;
+    transform: scaleX(0); transform-origin: 100% 50%;
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.4, 1);
+  }
+  .uline:hover::after, .uline:focus-visible::after { transform: scaleX(1); transform-origin: 0% 50%; }
+
+  .megamark {
+    font-weight: 500; letter-spacing: -0.05em; line-height: 0.78;
+    font-size: 13.2vw; white-space: nowrap; text-align: center;
+    width: 100vw; user-select: none;
+    padding-bottom: 0.12em;
+  }
+
+  #cursor { position: fixed; top: 0; left: 0; width: 12px; height: 12px; border-radius: 50%; background: #6d5bf5; z-index: 90; pointer-events: none; transform: translate(-50%, -50%); transition: width .3s, height .3s, opacity .3s; }
+  #cursor.grow { width: 56px; height: 56px; opacity: .3; }
+  @media (hover: none) { #cursor { display: none; } }
+
+  .logo-text { display: inline-block; font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.5; color: #fff; white-space: nowrap; }
+  .lk { display: inline-block; vertical-align: top; }
+  .lg {
+    display: inline-block; overflow: hidden; vertical-align: top;
+    font-size: 1em; opacity: 1;
+    transition: font-size 1s cubic-bezier(0.51, 0, 0.08, 1), opacity 0.6s ease-out;
+  }
+  #nav.scrolled .lg {
+    font-size: 0; opacity: 0;
+    transition: font-size 0.85s cubic-bezier(0.51, 0, 0.08, 1), opacity 0.18s ease-in;
+  }
+
+  /* Accordion: grid-rows 0fr -> 1fr trick, no JS height measuring needed */
+  .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s cubic-bezier(.22,1,.36,1); }
+  .faq-answer > div { overflow: hidden; }
+  .faq-row.open .faq-answer { grid-template-rows: 1fr; }
+  .faq-icon { transition: transform 0.35s cubic-bezier(.22,1,.36,1); }
+  .faq-row.open .faq-icon { transform: rotate(45deg); }
+  .faq-row.open h3 { color: #6d5bf5; }
+</style>
+</head>
+
+<body class="grain overflow-x-hidden w-full max-w-full antialiased">
+
+<div id="cursor"></div>
+
+<!-- NAV -->
+<header id="nav" class="fixed top-0 left-0 right-0 z-50">
+  <nav class="flex items-center justify-between px-6 md:px-10 py-4 bg-black/50 backdrop-blur-md">
+    <a href="index.html" class="flex items-center" data-hover aria-label="TheImageDept">
+      <span class="logo-text"><span class="lk">T</span><span class="lg">h</span><span class="lg">e</span><span class="lk">I</span><span class="lg">m</span><span class="lg">a</span><span class="lg">g</span><span class="lg">e</span><span class="lk">D</span><span class="lg">e</span><span class="lg">p</span><span class="lg">t</span></span>
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-sm text-white/70">
+      <a href="faq.html" class="uline text-white" data-hover>FAQ</a>
+    </div>
+    <a href="contact.html" class="text-sm underline underline-offset-4 decoration-white/40 hover:decoration-blue hover:text-blue transition-colors" data-hover>Let's talk <svg class="inline-block w-[0.68em] h-[0.68em] -translate-y-[1px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- CHAPTER 1 (BLACK): INTRO -->
+  <section class="bg-black pt-40 pb-20 md:pt-52 md:pb-24 px-6 md:px-10">
+    <div class="max-w-5xl mx-auto">
+      <p class="reveal-up text-blue text-sm font-semibold tracking-widest uppercase mb-6">FAQ</p>
+      <h1 class="reveal-up text-5xl md:text-7xl tracking-tight font-light leading-[1.05] mb-8">Questions, answered.</h1>
+      <p class="reveal-up text-white/50 text-lg max-w-lg">Everything we get asked most about websites, management systems, and automations. Can't find it here? <a href="contact.html" class="underline underline-offset-4 decoration-white/30 hover:text-blue hover:decoration-blue transition-colors" data-hover>Just ask.</a></p>
+    </div>
+  </section>
+
+  <!-- CHAPTER 2 (BLACK): ACCORDION -->
+  <section class="bg-black pb-28 md:pb-40 px-6 md:px-10">
+    <div class="max-w-4xl mx-auto">
+
+      <button class="faq-row reveal-up w-full text-left border-t border-white/10 py-7 md:py-9" data-hover aria-expanded="false">
+        <div class="flex items-start justify-between gap-6">
+          <h3 class="text-xl md:text-2xl font-light tracking-tight pr-8 transition-colors">What do you actually build?</h3>
+          <span class="faq-icon flex-shrink-0 text-2xl text-white/40 leading-none">+</span>
+        </div>
+        <div class="faq-answer"><div>
+          <p class="text-white/50 text-base leading-relaxed pt-4 max-w-2xl">Websites, management systems, and automations — whatever your business needs to run better online. If it involves code, there's a good chance we can build it.</p>
+        </div></div>
+      </button>
+
+      <button class="faq-row reveal-up w-full text-left border-t border-white/10 py-7 md:py-9" data-hover aria-expanded="false">
+        <div class="flex items-start justify-between gap-6">
+          <h3 class="text-xl md:text-2xl font-light tracking-tight pr-8 transition-colors">How much does a project cost?</h3>
+          <span class="faq-icon flex-shrink-0 text-2xl text-white/40 leading-none">+</span>
+        </div>
+        <div class="faq-answer"><div>
+          <p class="text-white/50 text-base leading-relaxed pt-4 max-w-2xl">It depends on scope — a marketing site is a different job than a full booking system or a workflow automation. Tell us what you need and we'll send back a clear, fixed quote before any work starts.</p>
+        </div></div>
+      </button>
+
+      <button class="faq-row reveal-up w-full text-left border-t border-white/10 py-7 md:py-9" data-hover aria-expanded="false">
+        <div class="flex items-start justify-between gap-6">
+          <h3 class="text-xl md:text-2xl font-light tracking-tight pr-8 transition-colors">How long does it take?</h3>
+          <span class="faq-icon flex-shrink-0 text-2xl text-white/40 leading-none">+</span>
+        </div>
+        <div class="faq-answer"><div>
+          <p class="text-white/50 text-base leading-relaxed pt-4 max-w-2xl">Most website builds land in 48–72 hours once we have what we need from you. Systems and automations vary more depending on complexity — we'll give you a realistic timeline upfront.</p>
+        </div></div>
+      </button>
+
+      <button class="faq-row reveal-up w-full text-left border-t border-white/10 py-7 md:py-9" data-hover aria-expanded="false">
+        <div class="flex items-start justify-between gap-6">
+          <h3 class="text-xl md:text-2xl font-light tracking-tight pr-8 transition-colors">Do I need to know anything technical?</h3>
+          <span class="faq-icon flex-shrink-0 text-2xl text-white/40 leading-none">+</span>
+        </div>
+        <div class="faq-answer"><div>
+          <p class="text-white/50 text-base leading-relaxed pt-4 max-w-2xl">No. You tell us what your business does and what you're trying to solve, and we handle everything from there.</p>
+        </div></div>
+      </button>
+
+      <button class="faq-row reveal-up w-full text-left border-t border-white/10 py-7 md:py-9" data-hover aria-expanded="false">
+        <div class="flex items-start justify-between gap-6">
+          <h3 class="text-xl md:text-2xl font-light tracking-tight pr-8 transition-colors">What if I don't like the design?</h3>
+          <span class="faq-icon flex-shrink-0 text-2xl text-white/40 leading-none">+</span>
+        </div>
+        <div class="faq-answer"><div>
+          <p class="text-white/50 text-base leading-relaxed pt-4 max-w-2xl">You'll review a draft, share feedback, and we refine until it's right. Nothing goes live until you approve it.</p>
+        </div></div>
+      </button>
+
+      <button class="faq-row reveal-up w-full text-left border-t border-white/10 py-7 md:py-9" data-hover aria-expanded="false">
+        <div class="flex items-start justify-between gap-6">
+          <h3 class="text-xl md:text-2xl font-light tracking-tight pr-8 transition-colors">Do you use Wix, Squarespace, or template builders?</h3>
+          <span class="faq-icon flex-shrink-0 text-2xl text-white/40 leading-none">+</span>
+        </div>
+        <div class="faq-answer"><div>
+          <p class="text-white/50 text-base leading-relaxed pt-4 max-w-2xl">No — every project is built from scratch, written and coded specifically for your brand. No page builders, no bloated software.</p>
+        </div></div>
+      </button>
+
+      <button class="faq-row reveal-up w-full text-left border-t border-white/10 py-7 md:py-9" data-hover aria-expanded="false">
+        <div class="flex items-start justify-between gap-6">
+          <h3 class="text-xl md:text-2xl font-light tracking-tight pr-8 transition-colors">Can you redesign a site I already have?</h3>
+          <span class="faq-icon flex-shrink-0 text-2xl text-white/40 leading-none">+</span>
+        </div>
+        <div class="faq-answer"><div>
+          <p class="text-white/50 text-base leading-relaxed pt-4 max-w-2xl">Yes. Send us what you've got and tell us what isn't working — we'll rebuild it properly.</p>
+        </div></div>
+      </button>
+
+      <button class="faq-row reveal-up w-full text-left border-t border-white/10 py-7 md:py-9" data-hover aria-expanded="false">
+        <div class="flex items-start justify-between gap-6">
+          <h3 class="text-xl md:text-2xl font-light tracking-tight pr-8 transition-colors">Do you offer support after launch?</h3>
+          <span class="faq-icon flex-shrink-0 text-2xl text-white/40 leading-none">+</span>
+        </div>
+        <div class="faq-answer"><div>
+          <p class="text-white/50 text-base leading-relaxed pt-4 max-w-2xl">Yes. We don't disappear after handoff — ongoing care and support is part of how we work.</p>
+        </div></div>
+      </button>
+
+      <button class="faq-row reveal-up w-full text-left border-t border-white/10 py-7 md:py-9" data-hover aria-expanded="false">
+        <div class="flex items-start justify-between gap-6">
+          <h3 class="text-xl md:text-2xl font-light tracking-tight pr-8 transition-colors">Can you connect a website to systems I already use?</h3>
+          <span class="faq-icon flex-shrink-0 text-2xl text-white/40 leading-none">+</span>
+        </div>
+        <div class="faq-answer"><div>
+          <p class="text-white/50 text-base leading-relaxed pt-4 max-w-2xl">In most cases, yes — from booking tools and CRMs to spreadsheets and internal dashboards. Tell us what you're working with and we'll figure out the best way to connect it.</p>
+        </div></div>
+      </button>
+
+      <button class="faq-row reveal-up w-full text-left border-t border-b border-white/10 py-7 md:py-9" data-hover aria-expanded="false">
+        <div class="flex items-start justify-between gap-6">
+          <h3 class="text-xl md:text-2xl font-light tracking-tight pr-8 transition-colors">How do we get started?</h3>
+          <span class="faq-icon flex-shrink-0 text-2xl text-white/40 leading-none">+</span>
+        </div>
+        <div class="faq-answer"><div>
+          <p class="text-white/50 text-base leading-relaxed pt-4 max-w-2xl">Reach out through the <a href="contact.html" class="underline underline-offset-4 decoration-white/30 hover:text-blue hover:decoration-blue transition-colors" data-hover>contact page</a> with a bit about your business. We'll reply within a day with next steps.</p>
+        </div></div>
+      </button>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-black border-t border-white/10 px-6 md:px-10 pt-16 pb-4 overflow-hidden">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-5 gap-10 mb-16 text-sm">
+      <div class="md:col-span-2">
+        <span class="text-white/40 block mb-2">Contact</span>
+        <a href="mailto:michael.amos5496@gmail.com" class="uline text-white/80 hover:text-blue transition-colors" data-hover>EMAIL</a><br/>
+                <a href="https://wa.me/233541479680" target="_blank" rel="noopener noreferrer" class="uline text-white/80 hover:text-blue transition-colors" data-hover>WHATSAPP</a>
+      </div>
+      <div>
+        <span class="text-white/40 block mb-2">Company</span>
+        <ul class="space-y-1.5 text-white/70">
+          <li><a href="faq.html" class="uline hover:text-blue" data-hover>FAQ</a></li>
+          <li><a href="contact.html" class="uline hover:text-blue" data-hover>Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="text-white/40 block mb-2">Social</span>
+        <!-- Placeholder links — point these at your real profiles -->
+        <ul class="space-y-1.5 text-white/70">
+          <li><a href="https://www.instagram.com/theimagedept_/" target="_blank" rel="noopener noreferrer" class="uline hover:text-blue" data-hover>Instagram</a></li>
+          <li><a href="#" class="uline hover:text-blue" data-hover>TikTok</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="text-white/40 block mb-2">Legal</span>
+        <ul class="space-y-1.5 text-white/70">
+          <li><a href="terms.html" class="uline hover:text-blue" data-hover>Terms</a></li>
+          <li><a href="privacy.html" class="uline hover:text-blue" data-hover>Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between gap-4 text-xs text-white/30 pb-6">
+      <span>&copy; 2026 TheImageDept. All rights reserved.</span>
+      <span>Developed by TheImageDept.</span>
+    </div>
+
+    <div class="megamark text-white select-none">theimagedept<span class="text-blue">.</span></div>
+  </footer>
+
+</main>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  gsap.utils.toArray('.reveal-up').forEach((el) => {
+    gsap.from(el, {
+      opacity: 0, y: 40, duration: 1, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 92%' },
+    });
+  });
+
+  // Nav logo collapse: "TheImageDept" -> "TID" past 60px
+  (function () {
+    const navEl = document.getElementById('nav');
+    function onScroll() { navEl.classList.toggle('scrolled', (window.scrollY || 0) > 60); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    lenis.on('scroll', onScroll);
+  })();
+
+  // Cursor dot
+  (function () {
+    const cur = document.getElementById('cursor');
+    if (!window.matchMedia('(hover: hover)').matches) return;
+    const xTo = gsap.quickTo(cur, 'x', { duration: 0.35, ease: 'power3' });
+    const yTo = gsap.quickTo(cur, 'y', { duration: 0.35, ease: 'power3' });
+    window.addEventListener('pointermove', (e) => { xTo(e.clientX); yTo(e.clientY); });
+    document.querySelectorAll('[data-hover]').forEach((el) => {
+      el.addEventListener('pointerenter', () => cur.classList.add('grow'));
+      el.addEventListener('pointerleave', () => cur.classList.remove('grow'));
+    });
+  })();
+
+  // Accordion: each question toggles independently
+  document.querySelectorAll('.faq-row').forEach((row) => {
+    row.addEventListener('click', () => {
+      const open = row.classList.toggle('open');
+      row.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+</script>
+</body>
+</html>
