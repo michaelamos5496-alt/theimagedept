@@ -184,10 +184,10 @@
     transition: font-size 0.85s cubic-bezier(0.51, 0, 0.08, 1), opacity 0.18s ease-in;
   }
 
-  #glance-track { scrollbar-width: none; -ms-overflow-style: none; }
-  #glance-track::-webkit-scrollbar { display: none; }
-  #glance-track.dragging { cursor: grabbing; }
-  #glance-track.dragging a { pointer-events: none; }
+  .glance-track { scrollbar-width: none; -ms-overflow-style: none; }
+  .glance-track::-webkit-scrollbar { display: none; }
+  .glance-track.dragging { cursor: grabbing; }
+  .glance-track.dragging a { pointer-events: none; }
   .glance-card { border-radius: 0; }
 
 
@@ -217,6 +217,7 @@
       <span class="logo-text"><span class="lk">T</span><span class="lg">h</span><span class="lg">e</span><span class="lk">I</span><span class="lg">m</span><span class="lg">a</span><span class="lg">g</span><span class="lg">e</span><span class="lk">D</span><span class="lg">e</span><span class="lg">p</span><span class="lg">t</span></span>
     </a>
     <div class="hidden md:flex items-center gap-8 text-sm text-white/70">
+      <a href="projects.html" class="uline hover:text-white transition-colors" data-hover>Projects</a>
       <a href="faq.html" class="uline hover:text-white transition-colors" data-hover>FAQ</a>
     </div>
     <a href="contact.html" class="text-sm underline underline-offset-4 decoration-white/40 hover:decoration-blue hover:text-blue transition-colors" data-hover>Let's talk <svg class="inline-block w-[0.68em] h-[0.68em] -translate-y-[1px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
@@ -302,12 +303,12 @@
   <section id="glance" class="bg-sand text-ink pb-28 md:pb-40">
     <div class="px-6 md:px-10">
       <div class="border-t border-ink/10 pt-5 pb-8 flex flex-wrap items-center justify-between gap-4">
-        <span class="reveal-up">TheImageDept at a glance.</span>
+        <span class="reveal-up">Portfolio.</span>
         <a href="mailto:michael.amos5496@gmail.com" class="reveal-up hover:text-blue transition-colors" data-hover>EMAIL</a>
       </div>
     </div>
 
-    <div id="glance-track" class="flex items-start gap-4 overflow-x-auto px-6 md:px-10 pb-2 cursor-grab select-none">
+    <div class="glance-track flex items-start gap-4 overflow-x-auto px-6 md:px-10 pb-2 cursor-grab select-none">
 
       <!-- Portfolio: Efuab -->
       <div class="glance-card flex-shrink-0 w-[85vw] md:w-[420px] h-[500px] bg-white overflow-hidden flex flex-col" data-hover>
@@ -380,19 +381,72 @@
             <span class="w-2.5 h-2.5 rounded-full" style="background:#febc2e;"></span>
             <span class="w-2.5 h-2.5 rounded-full" style="background:#28c840;"></span>
           </div>
-          <div class="flex-1 bg-white rounded-full px-3 py-1 text-xs truncate" style="border:1px solid #dadce0;color:#555;">aggor-yorm.vercel.app</div>
+          <div class="flex-1 bg-white rounded-full px-3 py-1 text-xs truncate" style="border:1px solid #dadce0;color:#555;">aggoryorm.com</div>
         </div>
         <div class="relative flex-shrink-0 overflow-hidden" style="height:300px;background:#f4f4f4;">
-          <iframe src="https://aggor-yorm.vercel.app/" title="Aggor Yorm preview" loading="lazy" tabindex="-1" aria-hidden="true" style="position:absolute;top:0;left:0;width:100%;height:700px;border:0;pointer-events:none;"></iframe>
+          <iframe src="https://aggoryorm.com/" title="Aggor Yorm preview" loading="lazy" tabindex="-1" aria-hidden="true" style="position:absolute;top:0;left:0;width:100%;height:700px;border:0;pointer-events:none;"></iframe>
         </div>
         <div class="p-5 flex-1 flex flex-col min-h-0">
           <p class="text-[10px] font-semibold uppercase tracking-widest text-ink/40 mb-1.5">Selected work</p>
           <p class="text-base font-semibold mb-1.5">Aggor Yorm &mdash; Media Producer &amp; Director</p>
           <p class="text-sm text-ink/50 leading-relaxed mb-4" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">A portfolio site for a creative director crafting African stories across TV, documentary, and branded content.</p>
-          <a href="https://aggor-yorm.vercel.app/" target="_blank" rel="noopener noreferrer" class="mt-auto text-sm underline underline-offset-4 decoration-ink/30 hover:text-blue hover:decoration-blue transition-colors">Visit site &rarr;</a>
+          <a href="https://aggoryorm.com/" target="_blank" rel="noopener noreferrer" class="mt-auto text-sm underline underline-offset-4 decoration-ink/30 hover:text-blue hover:decoration-blue transition-colors">Visit site &rarr;</a>
         </div>
       </div>
 
+      <!-- Portfolio: Besties Africa -->
+      <div class="glance-card flex-shrink-0 w-[85vw] md:w-[420px] h-[500px] bg-white overflow-hidden flex flex-col" data-hover>
+        <div class="flex items-center gap-2.5 px-4 py-2.5 flex-shrink-0" style="background:#f1f3f4;">
+          <div class="flex gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#ff5f57;"></span>
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#febc2e;"></span>
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#28c840;"></span>
+          </div>
+          <div class="flex-1 bg-white rounded-full px-3 py-1 text-xs truncate" style="border:1px solid #dadce0;color:#555;">bestiesafrica.com</div>
+        </div>
+        <div class="relative flex-shrink-0 overflow-hidden" style="height:300px;background:#f4f4f4;">
+          <iframe src="https://www.bestiesafrica.com/" title="Besties Africa preview" loading="lazy" tabindex="-1" aria-hidden="true" style="position:absolute;top:0;left:0;width:100%;height:700px;border:0;pointer-events:none;"></iframe>
+        </div>
+        <div class="p-5 flex-1 flex flex-col min-h-0">
+          <p class="text-[10px] font-semibold uppercase tracking-widest text-ink/40 mb-1.5">Selected work</p>
+          <p class="text-base font-semibold mb-1.5">Besties Africa &mdash; Community for Girls</p>
+          <p class="text-sm text-ink/50 leading-relaxed mb-4" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">A community site empowering girls across Africa to build confidence, friendships, and creativity through mentorship.</p>
+          <a href="https://www.bestiesafrica.com/" target="_blank" rel="noopener noreferrer" class="mt-auto text-sm underline underline-offset-4 decoration-ink/30 hover:text-blue hover:decoration-blue transition-colors">Visit site &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Portfolio: Outta Rentals (site blocks iframes, so a static panel replaces the live preview) -->
+      <div class="glance-card flex-shrink-0 w-[85vw] md:w-[420px] h-[500px] bg-white overflow-hidden flex flex-col" data-hover>
+        <div class="flex items-center gap-2.5 px-4 py-2.5 flex-shrink-0" style="background:#f1f3f4;">
+          <div class="flex gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#ff5f57;"></span>
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#febc2e;"></span>
+            <span class="w-2.5 h-2.5 rounded-full" style="background:#28c840;"></span>
+          </div>
+          <div class="flex-1 bg-white rounded-full px-3 py-1 text-xs truncate" style="border:1px solid #dadce0;color:#555;">outtarentals.com</div>
+        </div>
+        <div class="relative flex-shrink-0 overflow-hidden flex items-center justify-center" style="height:300px;background:#0a0a0a;">
+          <span class="text-white font-bold tracking-[0.2em] text-2xl">OUTTA RENTALS</span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col min-h-0">
+          <p class="text-[10px] font-semibold uppercase tracking-widest text-ink/40 mb-1.5">Selected work</p>
+          <p class="text-base font-semibold mb-1.5">Outta Rentals &mdash; Production Equipment</p>
+          <p class="text-sm text-ink/50 leading-relaxed mb-4" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">A rental site for a premium film and photography equipment company: cameras, lenses, lighting, grip and audio.</p>
+          <a href="https://www.outtarentals.com" target="_blank" rel="noopener noreferrer" class="mt-auto text-sm underline underline-offset-4 decoration-ink/30 hover:text-blue hover:decoration-blue transition-colors">Visit site &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CHAPTER 4b (WHITE): PROJECTS — link to projects page -->
+  <section id="projects" class="bg-sand text-ink pb-16 md:pb-24 px-6 md:px-10">
+    <div class="border-t border-ink/10 pt-5 pb-10 flex flex-wrap items-center justify-between gap-4">
+      <span class="reveal-up">Projects.</span>
+    </div>
+    <div class="reveal-up flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+      <p class="text-3xl md:text-5xl font-light tracking-tight max-w-2xl">Products we&rsquo;ve built ourselves, shown here.</p>
+      <a href="projects.html" class="btn-blue inline-block self-start px-9 py-4 text-sm font-semibold transition-colors" data-hover>View projects &rarr;</a>
     </div>
   </section>
 
@@ -434,6 +488,7 @@
       <div>
         <span class="text-white/40 block mb-2">Company</span>
         <ul class="space-y-1.5 text-white/70">
+          <li><a href="projects.html" class="uline hover:text-blue" data-hover>Projects</a></li>
           <li><a href="faq.html" class="uline hover:text-blue" data-hover>FAQ</a></li>
           <li><a href="contact.html" class="uline hover:text-blue" data-hover>Contact</a></li>
         </ul>
@@ -744,13 +799,12 @@
 
   // "At a glance" strip: cards stagger in, the strip drifts on its own
   // (slow continuous auto-scroll, seamless loop), and you can still grab it.
-  (function () {
-    const track = document.getElementById('glance-track');
-    if (!track) return;
+  document.querySelectorAll('.glance-track').forEach(function (track) {
+    const isStatic = track.classList.contains('static');
 
-    gsap.from('.glance-card', {
+    gsap.from(track.querySelectorAll('.glance-card'), {
       opacity: 0, y: 36, duration: 0.9, stagger: 0.08, ease: 'power3.out',
-      scrollTrigger: { trigger: '#glance', start: 'top 80%' },
+      scrollTrigger: { trigger: track, start: 'top 85%' },
     });
 
     let down = false, startX = 0, startScroll = 0;
@@ -769,12 +823,12 @@
       scheduleResume();
     });
 
-    let auto = true, wrapDelta = 0, pos = 0, resumeTimer = null;
+    let auto = !isStatic, wrapDelta = 0, pos = 0, resumeTimer = null;
     let hovering = false;
     const SPEED = 60;
     function scheduleResume() {
       clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(() => { if (!hovering && !down) { pos = track.scrollLeft; auto = true; } }, 2200);
+      resumeTimer = setTimeout(() => { if (!hovering && !down) { pos = track.scrollLeft; auto = !isStatic; } }, 2200);
     }
     // Delegated (not mouseenter/leave on the track) so hovering a card — including
     // clones created later by cloneSet() — pauses the drift, but the gaps between
@@ -805,6 +859,7 @@
     function cloneSet() {
       if (cloned) return;
       cloned = true;
+      if (isStatic) return;
       const cards = Array.from(track.children);
       cards.forEach((card) => {
         const copy = card.cloneNode(true);
@@ -820,7 +875,7 @@
     }
     window.addEventListener('load', cloneSet, { once: true });
     setTimeout(cloneSet, 1500);
-  })();
+  });
 
   window.addEventListener('load', () => ScrollTrigger.refresh());
 
